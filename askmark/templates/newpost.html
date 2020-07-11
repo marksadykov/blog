@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Новый пост{% endblock %}
+
+  {% block content %}
+  
+
+    {% if user.is_authenticated %}
+
+      <h2 class="">Новый вопрос</h2>
+      <br>
+      <form action="{% url 'blog:post_new' %}" method="POST">
+
+        {% csrf_token %}
+        <div class="form-new-post">
+
+              {{ form.as_p }}
+              <button type="submit" class="btn btn-outline-success">Задать вопрос</button>
+
+        </div>
+
+      </form>
+
+    {% else %}
+
+      <p>Для создания вопроса нужно авторизироваться!</p>
+
+    {% endif %}
+{% endblock %}
+
+
+
+
+  {% block bar %}
+  <div class="col-4 bg-light main-sidebar">
+      <h3>Лучшие вопросы</h3>
+      <ul class="list-group">
+        
+        <li class="list-group-item style-of-new-posts">
+            <a href="{% url 'blog:detail' top_question_0.id %}">
+              {{top_question_0.question_title}}
+            </a>
+        </li>
+        <li class="list-group-item style-of-new-posts">
+            <a href="{% url 'blog:detail' top_question_1.id %}">
+              {{top_question_1.question_title}}
+            </a>
+        </li>
+        <li class="list-group-item style-of-new-posts">
+            <a href="{% url 'blog:detail' top_question_2.id %}">
+              {{top_question_2.question_title}}
+            </a>
+        </li>
+      </ul>
+
+    </div>
+  {% endblock %}
+
+
+
+
+
+{% block pagination %}{% endblock %}

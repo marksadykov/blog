@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+      {% block content %}
+      {% if tag %}
+            <h2 class="label-new-questions">Статьи с тегом #{{ tag.name }}</h2>
+      {% else %}
+      <h2 class="label-new-questions">Новые вопросы</h2>
+      {% endif %}
+      
+        {% if posts %}
+          {% for a in posts %}
+
+
+
+            <div class="prev-post row style-of-new-posts">
+              <div class="col-3">
+                <br>
+                <img class="prev-img" src="{{a.author_id.profile.img.url}}">
+              </div>
+              <div class="col-9">
+                <h4 class="name-label"><a class="style-of-new-posts" href="{% url 'blog:detail' a.id %}">{{a.question_title}}</a></h4>
+                <p>Пользователь: <b>{{a.author_id}}</b></p>
+                <p>{{a.article_text }}</p>
+                <a class="btn" href="{% url 'blog:detail' a.id %}" class="">Ответов:
+                  {% for k, v in answers.items %}
+                      {% if k ==  a.id %}
+                          {{ v }}
+                      {% endif %}
+                  {% endfor %}
+                </a>
+                <br><br>
+               <span>Теги:</span>
+                <span>
+                      {% for tag in a.tags.all %}
+                        <a class="btn" href="{% url 'blog:post_list_by_tag' tag.slug %}"> {{ tag.name }}</a>
+                      {% endfor %}
+                </span>
+
+              </div>
+            </div>
+
+          {% endfor %}
+        {% else %}
+          <p>Вопросов пока нет</p>
+        {% endif %}
+    {% endblock %}
+
+  {% block bar %}
+  <div class="col-4 bg-light main-sidebar">
+      <h3>Лучшие вопросы</h3>
+      <ul class="list-group">
+        
+        <li class="list-group-item style-of-new-posts">
+            <a href="{% url 'blog:detail' top_question_0.id %}">
+              {{top_question_0.question_title}}
+            </a>
+        </li>
+        <li class="list-group-item style-of-new-posts">
+            <a href="{% url 'blog:detail' top_question_1.id %}">
+              {{top_question_1.question_title}}
+            </a>
+        </li>
+        <li class="list-group-item style-of-new-posts">
+            <a href="{% url 'blog:detail' top_question_2.id %}">
+              {{top_question_2.question_title}}
+            </a>
+        </li>
+      </ul>
+
+    </div>
+  {% endblock %}
+
+{% block pagination %}
+<div class="row style-of-new-posts">
+  <div class="col-sm">
+    <span class="step-links">
+        {% if posts.has_previous %}
+            <a href="?page=1">&laquo; первая</a>
+            <a href="?page={{ questions.previous_page_number }}">предыдущая</a>
+        {% endif %}
+
+        
+
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">следующая</a>
+            <a href="?page={{ posts.paginator.num_pages }}">последняя &raquo;</a>
+        {% endif %}
+    </span>
+
+  </div>
+  <div class="col-sm">
+    <span class="step-links">
+            Страница {{ posts.number }} из {{ posts.paginator.num_pages }}
+    </span>
+  </div>
+</div>
+{% endblock %}

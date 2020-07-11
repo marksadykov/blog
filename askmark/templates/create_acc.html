@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+    {% block content %}
+     {% if user.is_authenticated %}
+
+    <p>Вы уже зарегистрированы</p>
+
+    {% else %}
+
+    <h2 class="">Создайте аккаунт</h2>
+
+    <form action="{% url 'blog:createaccsu' %}" method="POST">
+
+        {% csrf_token %}
+
+        {{mes}}
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-2 label-form">
+          <p>Логин</p><br>
+          <p>email</p><br>
+          <p>Пароль</p>
+        </div>
+        <div class="col-10 label-inputs">
+          <input class="form-control" name="username">
+          <input class="form-control" type="email" name="email">
+          <input class="form-control" type="password" name="password">
+          <button type="submit" class="btn btn-outline-success">Зарегистрироваться</button>
+        </div>
+      </div>
+
+    </form>
+
+    {% endif %}
+      
+    {% endblock %}
+
+
+{% block title %}Зарегистрироваться{% endblock %}
+
+
+

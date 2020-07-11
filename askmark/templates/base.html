@@ -1,0 +1,73 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+
+    <meta charset="utf-8">
+    
+    <title>{% block title %}AskMark{% endblock %}</title>
+
+    <script type="text/javascript" src="{% static "assert/js/jquery-3.5.1.min.js" %}"></script>
+
+    <script type="text/javascript" src="{% static "assert/js/jquery.cookie.js" %}"></script>
+
+    <link rel="stylesheet" href="{% static "assert/style/bootstrap.min.css"%}">
+  	<link rel="stylesheet" href="{% static "assert/style/style.css"%}">
+
+    <script type="text/javascript" src="{% static "assert/js/script.js" %}"></script>
+
+
+</head>
+
+<body>
+<header class="fixed-top navbar-expand-lg navbar-light bg-light">
+<div class="row">
+    <div class="col-3 main-label"><a class="" href="{% url 'blog:post_list' %}">AskMark</a></div>
+    <div class="col-3 input-group mb-3">
+      <input type="text" class="form-control" placeholder="Введите название вопроса">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button">Поиск</button>
+      </div>
+    </div>
+
+    {% block auth %} 
+    {% if user.is_authenticated %}
+    <div class="col-6 button-auth">
+      <a href="{% url 'logout' %}"><button type="button" class="btn btn-outline-success">Выйти</button></a>
+      <a href="{% url 'blog:change' %}"><button type="button" class="btn btn-outline-success">Настройки</b></button></a>
+      <a href="{% url 'blog:change' %}"><button type="button" class="btn btn-outline-success">Привет, <b>{{user.username}}</b></button></a>
+      <a href="{% url 'blog:newpost_page' %}"><button type="button" class="btn btn-outline-success">Задать новый вопрос</button></a>
+
+    </div>
+{% else %}
+    <div class="col-6 button-auth">
+      <a href="{% url 'login' %}"><button type="button" class="btn btn-outline-success">Войти</button></a>
+      <a href="{% url 'blog:createacc' %}"><button type="button" class="btn btn-outline-success">Зарегистрироваться</button></a>
+    </div>
+{% endif %}
+    {% endblock %}
+
+</div>
+</header>
+
+<div class="container content">
+  
+  <div class="row">
+    <div class="col-8">
+      {% block content %}{% endblock %}
+    </div>
+
+    {% block bar %}{% endblock %}
+
+
+  </div>
+
+
+{% block pagination %}
+{% endblock %}
+
+
+</div>
+</body>
+
+</html>

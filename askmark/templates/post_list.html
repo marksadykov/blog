@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+  {% block content %}
+        {% if tag %}
+            <h2 class="label-new-questions">Статьи с тегом "{{ tag.name }}"</h2>
+        {% endif %}
+            {% for post in posts %}
+                <div class="post-preview">
+                        <h2 class="post-title">
+                            <a href="{% url 'post_detail' slug=post.slug %}">{{ post.question_title }}</a>
+                        </h2>
+                        <p>
+                            {{ post.article_text }}
+                        </p>
+                    <p class="post-meta">Опубликовано {{ post.pub_date }}</p>
+                    <p class="post-meta">
+                        ТЕГИ:
+                            {% for tag in post.tags.all %}
+                            <a href="{% url 'post_list_by_tag' tag.slug %}"> {{ tag.name }}</a> |
+                            {% endfor %}
+                    </p>
+
+                </div>
+            {% endfor %}
+{% endblock %}
+
+  {% block bar %}
+  <div class="col-4 bg-light main-sidebar">
+      <h3>Лучшие вопросы</h3>
+      <ul class="list-group">
+        
+        <li class="list-group-item style-of-new-posts">
+            <a href="{% url 'blog:detail' top_question_0.id %}">
+              {{top_question_0.question_title}}
+            </a>
+        </li>
+        <li class="list-group-item style-of-new-posts">
+            <a href="{% url 'blog:detail' top_question_1.id %}">
+              {{top_question_1.question_title}}
+            </a>
+        </li>
+        <li class="list-group-item style-of-new-posts">
+            <a href="{% url 'blog:detail' top_question_2.id %}">
+              {{top_question_2.question_title}}
+            </a>
+        </li>
+      </ul>
+
+    </div>
+  {% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+    {% block content %}
+     {% if user.is_authenticated %}
+
+    <h2 class="">Настройки</h2><a href="{% url 'password_change' %}"><button type="submit" class="btn btn-outline-success">Изменить пароль</button></a>
+    <hr>
+
+
+
+
+      <div class="row">
+        <div class="col-3 label-form">
+          <span><b>Ваш логин:</b> {{uname}}</span><hr>
+          <span><b>Ваш email:</b> {{uemail}}</span><hr>
+          <span><b>Ваше имя: </b>{{ufirstname}}</span><hr>
+        </div>
+      </div>
+
+    <form action="{% url 'blog:changelogin' %}" method="POST">
+
+        {% csrf_token %}
+
+        {{mes}}
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-2 label-form">
+          <p>Новый логин</p><br>
+          <p>Новый email</p><br>
+          <p>Новое имя</p>
+        </div>
+        <div class="col-10 label-inputs">
+          <input class="form-control" name="username">
+          <input class="form-control" name="email">
+          <input class="form-control" name="firstname">
+          <button type="submit" class="btn btn-outline-success">Применить</button>
+        </div>
+      </div>
+
+    </form>
+
+    {% else %}
+
+    <p>Чтобы сменить логин, необходимо войти!</p>
+    
+
+    {% endif %}
+      
+    {% endblock %}
+
+
+{% block title %}Настройки{% endblock %}
+
+
+

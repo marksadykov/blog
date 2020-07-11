@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block title %}{{question.question_title}}{% endblock %}
+
+  {% block content %}
+
+      <h2 class="label-new-questions">{{question.question_title}}</h2><br>
+      <em>{{question.pub_date}}</em>
+      <br>
+      <span>Теги:</span>
+      <span class="style-of-new-posts">{% for tag in question.tags.all %}
+                        <a href="{% url 'blog:post_list_by_tag' tag.slug %}"> {{ tag.name }}</a> |
+            {% endfor %}
+      </span>
+      <br>
+      <br>
+
+        <img class="prev-img" src="{{question.author_id.profile.img.url}}">
+
+      <br>
+      <br>
+      <span>Автор:</span>
+      <span><b>{{question.author_id}}</b></span>
+      <br>
+      <br>   
+       <!-- -->
+
+          <button type="button" class="btn btn-outline-success" data-id="{{ question.id }}" data-type="question" data-action="like" title="Нравится">
+                <span class="glyphicon glyphicon-thumbs-up">Нравится </span>
+                <span data-count="like">{{ question.votes.likes.count }}</span>
+          </button>
+
+          <button type="button" class="btn btn-outline-success" data-id="{{ question.id }}" data-type="question" data-action="dislike" title="Не нравится">
+              <span class="glyphicon glyphicon-thumbs-down">Не нравится</span>
+              <span data-count="dislike">{{ question.votes.dislikes.count }}</span>
+          </button>
+
+      <!-- -->
+      
+      <br>
+      <br> 
+
+      <p>{{question.article_text|linebreaksbr}}</p>
+
+
+      <hr>
+
+      <p>Ответов: <b>{{answers_list_count}}</b></p>
+
+      {% if answers_list %}
+        {% for c in answers_list %}
+        <hr>
+        <img class="prev-img-ans" src="{{c.author_id.profile.img.url}}">
+
+            
+            <span><strong>{{c.author_id}}: </strong></span>
+
+
+            {% if user.id == user_id.id %}
+              {% if c.id != question.id_top_answer %}
+                <button type="button" class="btn btn-outline-success" data-id="{{c.id}}" data-type="answer" data-action="top"  title="Лучший">
+                    <span class="glyphicon glyphicon-thumbs-down">Лучший ответ</span>
+                    <span data-count="top">{{top}}</span>
+                </button>
+              {% endif %}
+            {% endif %}
+
+            {% if c.id == question.id_top_answer %}
+              <span class="style-of-new-posts"><a>[Это лучший ответ]</a></span>
+            {% endif %}
+
+            <br>
+            <br>
+            <span>{{c.answer_text}}</span>
+          
+          {% endfor %}
+      {% else %}
+          <p>Пока нет комментариев</p>
+        {% endif %}
+      <hr>
+
+    <form action="{% url 'blog:leave_comment' question.id %}" method="POST">
+      
+      {% csrf_token %}
+
+      <div class="row">
+        <div class="col-2 label-form">
+          <p>Ответ</p>
+        </div>
+        <div class="col-10 label-inputs">
+          <textarea name="text" class="form-control"></textarea>
+          <button type="submit" class="btn btn-outline-success">Ответить</button>
+        </div>
+      </div>
+    </form>
+
+      
+  {% endblock %}
+
+
+
+  {% block bar %}
+  <div class="col-4 bg-light main-sidebar">
+      <h3>Лучшие вопросы</h3>
+      <ul class="list-group">
+        
+        <li class="list-group-item style-of-new-posts">
+            <a href="{% url 'blog:detail' top_question_0.id %}">
+              {{top_question_0.question_title}}
+            </a>
+        </li>
+        <li class="list-group-item style-of-new-posts">
+            <a href="{% url 'blog:detail' top_question_1.id %}">
+              {{top_question_1.question_title}}
+            </a>
+        </li>
+        <li class="list-group-item style-of-new-posts">
+            <a href="{% url 'blog:detail' top_question_2.id %}">
+              {{top_question_2.question_title}}
+            </a>
+        </li>
+      </ul>
+
+    </div>
+  {% endblock %}
+
+
+
+{% block pagination %}{% endblock %}

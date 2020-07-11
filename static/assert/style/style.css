@@ -1,0 +1,94 @@
+.main-label a{
+	font-size: 30px;
+	color: green;
+}
+
+.button-auth button {
+	float: right;
+	margin-right: 2px;
+	margin-left: 2px;
+}
+
+header{
+	 padding: 8px;
+}
+
+.content{
+	padding: 10px;
+	margin-top: 80px; 
+}
+
+.main-sidebar {
+  position: fixed;
+  top: 100;
+  right: 0;
+  margin: 10px;
+}
+
+.label-new-questions{
+	display: inline-block;
+	padding-right: 15px; 
+
+}
+
+.prev-post{
+	padding: 5px;
+	margin-bottom: 20px;
+	background-color: #ffffff; 
+	border: 2px solid #D4D4D4; 
+	border-radius: 10px; 
+	box-shadow: 0 0 15px #A9A9A9; 
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.label-form p{
+	margin-bottom: 20px;
+
+}
+
+.label-inputs input{
+	margin-bottom: 20px;
+	border: 1px solid #000;
+
+}
+
+.label-inputs textarea{
+	margin-bottom: 20px;
+	resize: none;
+	padding: 10px;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 1px solid #000;
+
+}
+
+.style-of-new-posts a{
+	color: green;
+	text-decoration: underline;
+}
+
+.top-answer span{
+	color: green;
+	text-decoration: underline;
+}
+
+
+.prev-img {
+	width: 150px;
+	height: 150px;
+}
+
+.prev-img-ans{
+	width: 50px;
+	height: 50px;
+}
